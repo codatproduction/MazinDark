@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=2]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_color = Color( 0.196078, 0.12549, 0.12549, 1 )
+
+[sub_resource type="CubeMesh" id=2]
+material = SubResource( 1 )
+size = Vector3( 2, 6, 2 )
+
+[sub_resource type="ConvexPolygonShape" id=3]
+points = PoolVector3Array( -1, 3, 1, 1, 3, -1, 1, 3, 1, -1, 3, -1, -1, -3, 1, 1, -3, -1, 1, -3, 1, -1, -3, -1, 1, 3, 1, -1, 3, -1, 1, 3, -1, -1, 3, 1, 1, -3, 1, -1, -3, -1, 1, -3, -1, -1, -3, 1, 1, 3, 1, -1, -3, 1, -1, 3, 1, 1, -3, 1, 1, 3, -1, -1, -3, -1, -1, 3, -1, 1, -3, -1 )
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.258824, 0.0980392, 0.0980392, 1 )
+
+[sub_resource type="PlaneMesh" id=5]
+material = SubResource( 4 )
+
+[sub_resource type="NavigationMesh" id=6]
+vertices = PoolVector3Array( 1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, -1 )
+polygons = [ PoolIntArray( 0, 1, 2 ), PoolIntArray( 1, 3, 2 ) ]
+
+[node name="Tiles" type="Node"]
+
+[node name="Wall" type="MeshInstance" parent="."]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="StaticBody" type="StaticBody" parent="Wall"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Wall/StaticBody"]
+shape = SubResource( 3 )
+
+[node name="Floor" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.55214 )
+mesh = SubResource( 5 )
+material/0 = null
+
+[node name="NavigationMeshInstance" type="NavigationMeshInstance" parent="Floor"]
+navmesh = SubResource( 6 )
