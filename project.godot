@@ -24,6 +24,19 @@ config/name="MazinDark"
 run/main_scene="res://src/Level.tscn"
 config/icon="res://icon.png"
 
+[importer_defaults]
+
+wav={
+"compress/mode": 0,
+"edit/loop": true,
+"edit/normalize": false,
+"edit/trim": false,
+"force/8_bit": false,
+"force/max_rate": false,
+"force/max_rate_hz": 44100,
+"force/mono": false
+}
+
 [input]
 
 movement_forward={
@@ -44,6 +57,11 @@ movement_left={
 movement_right={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":68,"unicode":0,"echo":false,"script":null)
+ ]
+}
+toggle_flashlight={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"unicode":0,"echo":false,"script":null)
  ]
 }
 

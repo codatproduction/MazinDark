@@ -1,8 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/Player.gd" type="Script" id=1]
+[ext_resource path="res://assets/386929__burghrecords__footsteps-indoor-soft.wav" type="AudioStream" id=2]
+[ext_resource path="res://assets/breathing.wav" type="AudioStream" id=3]
 
 [sub_resource type="CapsuleShape" id=1]
+radius = 0.7
+
+[sub_resource type="CylinderShape" id=2]
 radius = 0.7
 
 [node name="Player" type="KinematicBody"]
@@ -19,3 +24,20 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.01242, 0 )
 
 [node name="Camera" type="Camera" parent="CameraPivot"]
 current = true
+
+[node name="SpotLight" type="SpotLight" parent="CameraPivot"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.883531, 0 )
+spot_angle = 31.4
+
+[node name="Collider" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="Collider"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.19009, 0 )
+shape = SubResource( 2 )
+
+[node name="Footsteps" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+
+[node name="Breathing" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+autoplay = true

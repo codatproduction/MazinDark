@@ -1,24 +1,33 @@
 extends KinematicBody
 
 const GRAVITY = -24.8
-var vel = Vector3()
 const MAX_SPEED = 7
 const ACCEL = 3.5
 
+onready var collider = $Collider
+onready var footsteps = $Footsteps
+
+signal orb_collected
+
+var vel = Vector3()
 var dir = Vector3()
+var collected_orbs = 0
 
 const DEACCEL= 16
 const MAX_SLOPE_ANGLE = 40
 
 var camera
 var rotation_helper
+var walking = false
 
 var MOUSE_SENSITIVITY = 0.05
 
 func _ready():
 	camera = $CameraPivot/Camera
 	rotation_helper = $CameraPivot
-
+	
+	collider.connect("area_entered", self, "on_area_entered")
+	
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _physics_process(delta):
@@ -43,8 +52,22 @@ func process_input(delta):
 		input_movement_vector.x -= 1
 	if Input.is_action_pressed("movement_right"):
 		input_movement_vector.x += 1
+	if Input.is_action_just_pressed("toggle_flashlight"):
+		$CameraPivot/SpotLight.visible = not $CameraPivot/SpotLight.visible
 
+		
 	input_movement_vector = input_movement_vector.normalized()
+	
+	if input_movement_vector.x != 0 or input_movement_vector.y != 0:
+		walking = true
+	else:
+		walking = false
+		
+	if walking and !footsteps.playing:
+		footsteps.play()
+	if not walking and footsteps.playing:
+		footsteps.stop()
+	
 
 	dir += -cam_xform.basis.z.normalized() * input_movement_vector.y
 	dir += cam_xform.basis.x.normalized() * input_movement_vector.x
@@ -81,6 +104,8 @@ func process_movement(delta):
 	hvel = hvel.linear_interpolate(target, accel * delta)
 	vel.x = hvel.x
 	vel.z = hvel.z
+
+	
 	vel = move_and_slide(vel, Vector3(0, 1, 0), 0.05, 4, deg2rad(MAX_SLOPE_ANGLE))
 
 func _input(event):
@@ -91,3 +116,15 @@ func _input(event):
 		var camera_rot = rotation_helper.rotation_degrees
 		camera_rot.x = clamp(camera_rot.x, -90, 90)
 		rotation_helper.rotation_degrees = camera_rot
+		
+	
+
+
+func on_area_entered(area):
+	if area.is_in_group("Orb"):
+		area.queue_free()
+		emit_signal("orb_collected")
+
+
+
+	
