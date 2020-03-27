@@ -21,8 +21,13 @@ _global_script_class_icons={
 [application]
 
 config/name="MazinDark"
-run/main_scene="res://src/Level.tscn"
+run/main_scene="res://src/menu_components/MainMenu.tscn"
 config/icon="res://icon.png"
+
+[display]
+
+window/stretch/mode="2d"
+window/stretch/aspect="expand"
 
 [importer_defaults]
 
