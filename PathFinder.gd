@@ -46,6 +46,15 @@ func find_path(start, target):
 	var grid_start = grid_map.world_to_map(start)
 	var grid_end = grid_map.world_to_map(target)
 	
+	grid_start.y = 0
+	grid_end.y = 0
+	
+	var index_start = get_point_index(grid_start)
+	var index_end = get_point_index(grid_end)
+	
+	if index_start == null or index_end == null:
+		return
+	
 	var astar_path = astar.get_point_path(get_point_index(grid_start), get_point_index(grid_end))
 	var world_path = []
 	for point in astar_path:

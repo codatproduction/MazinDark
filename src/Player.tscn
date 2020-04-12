@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://src/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/386929__burghrecords__footsteps-indoor-soft.wav" type="AudioStream" id=2]
 [ext_resource path="res://assets/breathing.wav" type="AudioStream" id=3]
+[ext_resource path="res://src/Fader.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.7
@@ -41,3 +42,5 @@ stream = ExtResource( 2 )
 [node name="Breathing" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 autoplay = true
+
+[node name="Fader" parent="." instance=ExtResource( 4 )]

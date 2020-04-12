@@ -51,7 +51,11 @@ func set_target(target):
 	
 	
 func on_hit_player(body):
-	print("We just slamed the f out of ", body.name)
+	if body.name == "Player":
+		body.die()
+		$Whisper.stop()
+		$Growl.play()
+		
 	
 func find_path_timer():
 	path = path_finder.find_path(global_transform.origin, target.global_transform.origin)
